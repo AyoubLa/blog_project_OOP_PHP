@@ -7,8 +7,10 @@ use App\App;
 /**
  * 
  */
-class Article extends Table
+class Post extends Table
 {
+    protected static $table = 'post';
+
 	public function __get($key)
 	{
         $methode = 'get' . ucfirst($key);
@@ -20,17 +22,24 @@ class Article extends Table
 	
     public static function getLast(){
 
-    	return App::getDb()->query('SELECT * FROM posts', __CLASS__);
+    	return parent::query('SELECT * FROM '.static::$table.' LEFT JOIN '.Category::$table.' 
+    		    ON post_category_id = category_id');
+    	
     }
 
-    public static function getPost($post_id){
+    public static function lastByCategory($id){
 
-    	return App::getDb()->prepare('SELECT * FROM posts WHERE post_id = ?', [$post_id], __CLASS__, true);
+	return parent::query('
+		SELECT * FROM '.static::$table.' 
+		LEFT JOIN '.Category::$table.' 
+		    ON post_category_id = category_id
+		WHERE category_id = ?', [$id]);
+    	
     }
 
 	public function getUrl()
 	{
-		return 'index.php?p=article&post='.$this->post_id;
+		return 'index.php?p=post&id='.$this->post_id;
 	}
 
 	public function getTitle()
@@ -49,11 +58,7 @@ class Article extends Table
 
 	public function getContent()
 	{
-		$html = '<p>' . utf8_encode($this->post_content) . '</p>';
-
-		$html .= '<p><a href="'.$this->getUrl().'">Voir la suite</a></p>';
-
-		return $html;
+		return '<p>' . utf8_encode($this->post_content) . '</p>';
 	}
 
 

@@ -2,14 +2,27 @@
 
 namespace App\Table;
 
+use App\App;
+
 /**
  * 
  */
 class Category extends Table
 {
-	
-	function __construct(argument)
+	private static $table = 'category';
+
+	public function getTable()
 	{
-		# code...
+		return self::$table;
+	}
+
+	public function getUrl()
+	{
+		return 'index.php?p=category&id='.$this->category_id;
+	}
+
+	public function getName()
+	{
+		return utf8_encode($this->category_name);
 	}
 }
