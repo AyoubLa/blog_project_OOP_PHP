@@ -2,42 +2,52 @@
 
 namespace App;
 
+use App\Config;
+
 require '../app/Autoloader.php';
 
 Autoloader::register();
 
-if(isset($_GET['p']) && isset($_GET['id'])){
+$config = Config::getInstance();
 
-	$p = $_GET['p'];
+$app = App::getInstance();
 
-}else{
+var_dump($config);
 
-	$p = 'home';
-}
+var_dump($app);
 
-//Objects initialisation
+// if(isset($_GET['p']) && isset($_GET['id'])){
 
-// $db = new Database('blog');
+// 	$p = $_GET['p'];
 
-ob_start();
+// }else{
 
-if($p === 'home'){
+// 	$p = 'home';
+// }
 
-	require '../pages/home.php';
+// //Objects initialisation
 
-}elseif($p === 'post'){
 
-    require '../pages/single.php';
 
-}elseif($p === 'category'){
+// ob_start();
 
-    require '../pages/category.php';
+// if($p === 'home'){
 
-}elseif ($p === '404') {
+// 	require '../pages/home.php';
+
+// }elseif($p === 'post'){
+
+//     require '../pages/single.php';
+
+// }elseif($p === 'category'){
+
+//     require '../pages/category.php';
+
+// }elseif ($p === '404') {
 	
-	require '../pages/404.php';
-}
+// 	require '../pages/404.php';
+// }
 
-$content = ob_get_clean();
+// $content = ob_get_clean();
 
-require '../pages/template/default.php';
+// require '../pages/template/default.php';

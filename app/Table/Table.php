@@ -9,8 +9,6 @@ use App\App;
  */
 class Table
 {
-	protected static $table;
-
 	public function __get($key)
 	{
         $methode = 'get' . ucfirst($key);
@@ -22,25 +20,21 @@ class Table
 
 	public static function all()
 	{
-
-    	return App::getDb()->query('
+    	return self::query('
     		SELECT * 
-    		FROM '.static::$table,
-         get_called_class());
+    		FROM '.static::getTable());
     }
 
     public static function find($id)
     {
-
-    	return App::getDb()->prepare('
+    	return self::query('
     		SELECT * 
-    		FROM '.static::$table.'
-    		WHERE '.static::$table.'_id = ?',
-        [$id],
-        get_called_class(), true);
+    		FROM '.static::getTable().'
+    		WHERE '.static::getTable().'_id = ?',
+        [$id], true);
     }
 
-    public static function query($statement, $attributes = null )
+    public static function query($statement, $attributes = null, $one = false)
     {
         if($attributes === null) {
 
@@ -50,7 +44,7 @@ class Table
         	
         	return App::getDb()->prepare($statement,
             $attributes,
-	        get_called_class());
+	        get_called_class(), $one);
         }
     }
 

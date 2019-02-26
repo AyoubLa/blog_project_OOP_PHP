@@ -9,6 +9,10 @@ class App
 {
 	private static $db;
 
+    private static $_instance;
+
+	private static $title = 'BlogPosts';
+
 	const DB_HOST = 'localhost';
 
 	const DB_NAME = 'blog';
@@ -17,6 +21,17 @@ class App
 
 	const DB_PASS = '';
 
+    public static function getInstance()
+    {
+        if(self::$_instance === null) {
+
+        	self::$_instance = new App();
+        }
+
+        return self::$_instance;
+
+    }
+
 	public static function getDb()
 	{
 		if(self::$db === null) {
@@ -24,8 +39,17 @@ class App
 			self::$db = new Database(self::DB_NAME, self::DB_USER, self::DB_PASS, self::DB_HOST);
 		}
 		
-
 		return self::$db;
+	}
+
+	public static function getTitle()
+	{
+		return self::$title;
+	}
+
+	public static function setTitle($title)
+	{
+		self::$title = self::$title . ' | ' . $title;
 	}
 
 	public static function notFound()

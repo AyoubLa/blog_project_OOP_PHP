@@ -12,6 +12,13 @@ $category = Category::find($post->post_category_id);
 
 ?>
 
-<h1><?= $post->title; ?></h1>
-<p><em><?= $category->name; ?></em></p>
-<p><?= $post->content; ?></p>
+<div class="col-md-12">
+
+  <h2><a href="<?= $post->url; ?>"><?= $post->title; ?></a></h2>
+
+  <p><em><a href="index.php?p=category&id=<?= $post->category_id ?>" ><?= $post->category_name; ?></a></em></p>
+
+  <?= $post->content; ?>
+
+</div>
+<?php App::setTitle($post->title); ?>

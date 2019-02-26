@@ -21,14 +21,16 @@ if($category === false)
 			  <p><em><?= $post->category_name; ?></em></p>
 			  <p><?= $post->extract; ?></p>
 
-
 			<?php endforeach; ?>
 
 		</ul>
 	</div>
 	<div class="col-sm-4">
 		<ul>
-		<?php foreach (Category::all() as $category): ?>
+		<?php 
+		    App::setTitle($post->category_name);
+		    foreach (Category::all() as $category):
+		?>
             <li><a href="<?= $category->url; ?>"><?= $category->name; ?></a></li>
 		<?php endforeach; ?>
 		</ul>

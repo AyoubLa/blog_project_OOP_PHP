@@ -11,7 +11,7 @@ class Category extends Table
 {
 	private static $table = 'category';
 
-	public function getTable()
+	public static function getTable()
 	{
 		return self::$table;
 	}
